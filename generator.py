@@ -17,7 +17,7 @@ operations = {
         "+": lambda x, y: x + y,
         "-": lambda x, y: x - y,
         "÷?": lambda x, y: x if y == 0 else x / y, # don't want division by zero errors, and filenames can't have / in them.
-        #"log": lambda x, y: math.log(x, y), # giving math domain errors
+        "log? base": lambda x, y: x if abs(x) <= 1 or abs(y) <= 1 else math.log(abs(x), abs(y)),
         #"~": lambda x, y: ~(getop()(x, y)), # todo
         ">>": lambda x, y: x >> y,
         "<<": lambda x, y: x << y,
@@ -106,7 +106,7 @@ for y in range(1024):
         for x in range(1024):
             data += bytes([the_function(x, y)])
     bar.index = y
-    if y % 13 == 0: bar.update()
+    if y % 13 == 0 or greyscale: bar.update()
 
 
 img.write_raw_idat_data(img.compress(data))
