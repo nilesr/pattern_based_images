@@ -18,7 +18,7 @@ Depends on [libpme](https://github.com/nilesr/libpme) (`pip3 install libpme`)
 
 	python3 generator.py [mode]
 
-`mode` can be one of `high` or `greyscale`. If left blank, it generates an image using the lowest bit of the result of the formula. If set to high, it will use the highest bit of the result. If set to greyscale, it will use the result of the formula as a shade of grey, truncated to one byte for png.
+`mode` can be one of `high`, `greyscale` or `all`. If left blank, it generates an image using the lowest bit of the result of the formula. If set to high, it will use the highest bit of the result. If set to greyscale, it will use the result of the formula as a shade of grey, truncated to one byte for png. If set to all, it will run all 3
 
 ### Examples
 
@@ -46,3 +46,15 @@ and for ((((x) & y) - x) + y) + 11
 
 ![](sample/greyscale2.png)
 
+### Todo
+
+#### Features
+
+Support for unary operators, like bitwise not (~)
+
+Support for detecting if the generated function only depends on one or zero of the position expressions
+
+#### Optimization
+
+Right now, if it generates an expression that starts with a bunch of constants (like ((12) log base? 3) ** 5) it will run those potentially-expensive calculations for each pixel, even though that part of the expression never changes.
+That could be optimized
