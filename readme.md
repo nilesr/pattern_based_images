@@ -18,7 +18,7 @@ Depends on [libpme](https://github.com/nilesr/libpme) (`pip3 install libpme`)
 
 	python3 generator.py [mode]
 
-`mode` can be one of `high`, `greyscale` or `all`. If left blank, it generates an image using the lowest bit of the result of the formula. If set to high, it will use the highest bit of the result. If set to greyscale, it will use the result of the formula as a shade of grey, truncated to one byte for png. If set to all, it will run all 3
+`mode` can be one of `high`, `greyscale`, `modulo`, or `all`. If left blank, it generates an image using the lowest bit of the result of the formula. If set to high, it will use the highest bit of the result. If set to greyscale, it will use the result of the formula as a shade of grey, truncated to one byte for png. modulo is just a special case of greyscale, where instead of truncating the return value, it modulos it by 2^8. If set to all, it will run all 4
 
 ### Examples
 
