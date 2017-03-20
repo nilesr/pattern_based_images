@@ -61,6 +61,10 @@ That could be optimized
 
 ### Changelog
 
+#### 1.3
+
+- Optimizations. With the sample data uncommented, a `time python3 generator.py all` takes 8:03 on 1.2 and 2:11 on 1.3, because adding a single byte to an already allocated stream of bytes gets really expensive as that stream gets bigger.
+
 #### 1.2
 
 - Added the % operator and the `modulo` argument.

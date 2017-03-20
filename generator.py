@@ -79,7 +79,8 @@ def build(the_function, name, greyscale):
     bar.start()
 
     for y in range(img.height):
-        data += b'\x00' # to indicate that this scanline contains raw pixel data.
+        this_scanline = b''
+        this_scanline += b'\x00' # to indicate that this scanline contains raw pixel data.
         if not greyscale:
             for x in range(0, img.width, 8): # eight pixels per byte of output, because bit_depth is 1
                 this_pixel = 0;
@@ -89,11 +90,12 @@ def build(the_function, name, greyscale):
                     this_pixel += val
                     this_pixel <<= 1
                 this_pixel >>= 1
-                data += bytes([this_pixel])
+                this_scanline += bytes([this_pixel])
         else: # for greyscale each pixel is one byte
             for x in range(img.width):
-                data += bytes([the_function(x, y)])
+                this_scanline += bytes([the_function(x, y)])
         # bar.update run all the time causes screen flickering, so only run it every 13 scanlines. greyscale is so slow that we may as well run it every time anyways.
+        data += this_scanline
         if y % 13 == 0 or greyscale: 
             bar.index = y
             bar.update()
@@ -119,12 +121,11 @@ def generate(arg = "default", ops = False, syms = False):
         return
 
     # uncomment to use the sample data. I used this to test the builder function.
-	# ops = [">>", "*", "-", "^"]
-	# ops.reverse()
-	# x = lambda x, y: x
-	# y = lambda x, y: y
-	# syms = [x, y, y, x, lambda x, y: 11]
-	# syms.reverse()
+    # ops = [">>", "*", "-", "^"]
+    # x = lambda x, y: x
+    # y = lambda x, y: y
+    # syms = [x, y, y, x, lambda x, y: 11]
+    # syms.reverse()
 
     # if we're running everything, use the now-generated operations and symbols to generate all four functions and exit
     if arg == "all":
