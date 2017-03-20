@@ -25,6 +25,7 @@ def gensym():
     else:
         r = random.randint(1, 16)
         # we can't just write "return lambda x, y: random.randint(1, 16)" or it would generate a different random number for each pixel. That bug took forever to find
+        # as bryan says, "this is what happens when you arent completely fluent in being multiple closures deep at all times"
         return lambda x, y: r
 
 def builder(syms, k, i = 0):
