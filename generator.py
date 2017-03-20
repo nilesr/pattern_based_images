@@ -8,7 +8,7 @@ operations = {
         "*": lambda x, y: x * y,
         "+": lambda x, y: x + y,
         "-": lambda x, y: x - y,
-        "%": lambda x, y: x % y,
+        "%?": lambda x, y: x if y == 0 else x % y,
         "÷?": lambda x, y: x if y == 0 else x / y, # don't want division by zero errors, and filenames can't have / in them.
         "log? base": lambda x, y: x if abs(x) <= 1 or abs(y) <= 1 else math.log(abs(x), abs(y)),
         #"~": lambda x, y: ~(getop()(x, y)), # todo
@@ -111,6 +111,13 @@ def generate(arg = "default", ops = False, syms = False):
         ops = [random.choice([x for x, y in operations.items()]) for k in range(random.randint(2, 6))]
     if not syms:
         syms = [gensym() for i in range(len(ops) + 1)]
+
+    literals = [f("x", "y") for f in syms]
+    if "y" not in literals or "x" not in literals:
+        print("DEBUG! " + sbuilder(syms, 1, False, ops) + " does not contain both x and y. Trying another")
+        generate(arg)
+        return
+
     # uncomment to use the sample data. I used this to test the builder function.
 	# ops = [">>", "*", "-", "^"]
 	# ops.reverse()

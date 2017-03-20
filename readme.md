@@ -52,9 +52,20 @@ and for ((((x) & y) - x) + y) + 11
 
 Support for unary operators, like bitwise not (~)
 
-Support for detecting if the generated function only depends on one or zero of the position expressions
+Support for detecting if the generated function only depends on one or zero of the position expressions - added in 1.2
 
 #### Optimization
 
 Right now, if it generates an expression that starts with a bunch of constants (like ((12) log base? 3) ** 5) it will run those potentially-expensive calculations for each pixel, even though that part of the expression never changes.
 That could be optimized
+
+### Changelog
+
+#### 1.2
+
+- Added the % operator and the `modulo` argument.
+- Added detection of some useless patterns
+
+#### 1.1
+
+- Added `greyscale` argument
