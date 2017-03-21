@@ -17,6 +17,9 @@ operations = {
         "&": lambda x, y: x & y,
         "|": lambda x, y: x | y
 }
+unary_operations = {
+        "~": lambda s, x, y: ~(s(x, y)) if type(x) == type(0) and type(y) == type(0) else "~" + str(s(x, y))
+}
 
 # gensym has a 1/3 chance of returning a lambda that returns x, 1/3 for y, and 1/3 for a number generated *when gensym was run*.
 def gensym():
@@ -113,6 +116,10 @@ def generate(arg = "default", ops = False, syms = False):
         ops = [random.choice([x for x, y in operations.items()]) for k in range(random.randint(2, 6))]
     if not syms:
         syms = [gensym() for i in range(len(ops) + 1)]
+        # for i in range(len(syms)):
+            # if random.randint(0, 4) == 0:
+                # sym = syms[i] # do not try and inline this
+                # syms[i] = lambda x, y: unary_operations[random.choice(x for x, y in unary_operations.items())](sym, x, y)
 
     literals = [f("x", "y") for f in syms]
     if "y" not in literals or "x" not in literals:
